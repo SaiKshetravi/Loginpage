@@ -1,0 +1,24 @@
+userdata=[{
+    username:"admin",
+    password:"admin123"
+},
+{
+    username:"user1",
+    password:"user123"
+},
+{
+    username:"user2",
+    password:"user123"
+},
+{
+    username: 'hhhh',
+     password: "$2b$10$vsrvCUXPQlzo1xnjy8DXBesJ9DWRQ1BCrTlT9fSvl5/ZUDehEabfe"
+},
+{
+    username: 'sai1',
+    password: '$2b$10$hw7/uhDqhXchjr1qL5efL.gEyGSO4UzrbLU8e1r2dzq0pJB5srKza',
+    accesstoken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhaTEiLCJwYXNzd29yZCI6IiQyYiQxMCRodzcvdWhEcWhYY2hqcjFxTDVlZkwuZ0V5R1NPNFV6cmJMVThlMXIyZHpxMHBKQjVzckt6YSIsImlhdCI6MTc0ODM1MTcyNiwiZXhwIjoxNzQ4MzUxNzM2fQ.HppQBLbeBSUKF8HEfdqYrR-t2TDaaU-GZcV73vBZ81M'
+  }
+
+]
+module.exports =userdata;
