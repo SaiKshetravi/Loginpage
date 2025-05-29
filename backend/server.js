@@ -4,8 +4,11 @@ const cors = require('cors');
 const userRoutes=require('./routes/userroutes');
 const app=express();
 
+
 const PORT=5000;
 const path = require('path');
+
+
 
 
 // app.use(express.static(path.join(__dirname, '../frontend')));
@@ -14,8 +17,24 @@ const path = require('path');
 
 app.use(express.json());
 
+
+
+
+
 app.use(cors());
 app.use('/user',userRoutes);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -32,3 +51,30 @@ app.post('/',(req,res)=>{
 app.listen(PORT,()=>{
     console.log('server is running ' + PORT);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
