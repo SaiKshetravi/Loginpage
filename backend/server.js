@@ -11,11 +11,18 @@ const path = require('path');
 
 
 
+
 // app.use(express.static(path.join(__dirname, '../frontend')));
 
 
 
+
+
+
+
+
 app.use(express.json());
+
 
 
 
@@ -51,6 +58,16 @@ app.post('/',(req,res)=>{
 app.listen(PORT,()=>{
     console.log('server is running ' + PORT);
 });
+
+
+
+
+
+
+
+
+
+
 
 
 

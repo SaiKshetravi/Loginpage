@@ -5,6 +5,8 @@ const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const saltRound=10;
 const userdata=require('../modules/userdata');
+const postdata=require('../modules/postdata');
+
 require("dotenv").config();
 
 router.get('/userdata',(req,res)=>{
@@ -27,16 +29,17 @@ temp.password=data.signupPassword;
         console.log("Username already exists");
         return res.status(400).json({ message: "Username already exists",status:false });
     }
+    const newUserId = userdata[userdata.length -1].id+1; 
     
 const enterpassword=temp.password;
 console.log(" entered password: ", enterpassword);
     const hashedpassword= await bcrypt.hash(temp.password,saltRound);
     temp.password=hashedpassword;
-    userCount += 1;
-    temp.userId = userCount;
+    // userCount += 1;
+    temp.id = newUserId;
     console.log("hashed Password "+hashedpassword);
     
-    let accesstoken= jwt.sign(temp,process.env.SECURITY_KEY,{expiresIn:'1d'})
+    let accesstoken= jwt.sign(temp,process.env.SECURITY_KEY,{expiresIn:'50m'})
 
     temp.accesstoken=accesstoken;
 
@@ -74,11 +77,20 @@ router.post('/login',async(req,res)=>{
                 const token =isUserExits[0].accesstoken;
                 try{
                 const result=jwt.verify(token,process.env.SECURITY_KEY)
-                res.status(200).json({message:"login successful",userdata:result,status:"success"})
+                console.log('result'+JSON.stringify(result));
+                console.log('postData' +JSON.stringify(postdata));
+                
+                if(postdata.length < 0){
+                    return res.json({message:"no posts available" ,status:"Failure"});
+                }
+                const userCreatedPosts = postdata.filter(item=>item.id===result.id)
+
+                console.log(userCreatedPosts+"userpostes")
+                res.status(200).json({message:"login successful",userdata:result,status:"success",userCreatedPosts:userCreatedPosts})
                 console.log("login successfull");
                 }
                 catch(error){
-                        res.status(400).json({msg:"Session Expired",})
+                        res.status(400).json({msg:"Session Expired",error:JSON.stringify(error)})
 
                 }
                 // console.log(await result);
