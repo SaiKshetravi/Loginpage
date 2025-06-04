@@ -47,6 +47,9 @@ const result = await response.json();
 
 console.log( result);
 if(result.status === "success"){
+    localStorage.setItem('accesstoken', result.logindata.accesstoken);
+    localStorage.setItem('refreshtoken',result.logindata.refreshtoken);
+
     alert("login success");
 }
 else{
