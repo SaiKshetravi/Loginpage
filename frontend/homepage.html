@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>content page</title>
+        <link rel="stylesheet" href="homepage.css">
+    </head>
+    <body  onload ="validatetoken(event)">
+        <header>
+            <div class="left-buttons">
+      <button  class="btn" onclick="window.location.href='createpost.html'">Create Post</button>
+    </div>
+    <div class="right-buttons">
+      <button class="btn">User Profile</button>
+      <button onclick="handleLogout(event)" class="btn" type="logout">Logout</button>
+    </div>
+  </header>
+
+  <div class="post-container" id="postContainer"></div>
+
+  <script src="homepage.js"></script>
+
+</body>
+</html>
+         

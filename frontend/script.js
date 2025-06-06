@@ -20,7 +20,7 @@ if(result.status === "success"){
     alert("signup success");
 }
 else{
-    alert("signupfailed");
+    alert("signup failed");
 }
  
 
@@ -51,6 +51,8 @@ if(result.status === "success"){
     localStorage.setItem('refreshtoken',result.logindata.refreshtoken);
 
     alert("login success");
+    window.location.href = "homepage.html";
+    
 }
 else{
     alert("login failed");
