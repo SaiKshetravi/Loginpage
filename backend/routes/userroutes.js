@@ -111,7 +111,7 @@ router.post('/login',async(req,res)=>{
                const isPasswordValid= await bcrypt.compare(data.loginPassword,databasepassword);
                console.log("valid password" ,isPasswordValid)
                if(isPasswordValid){
-                const token =isUserExits.accesstoken;
+                // const token =isUserExits.accesstoken;
                 try{
                 // const result=jwt.verify(token,process.env.SECURITY_KEY)
                 // console.log('result'+JSON.stringify(result));

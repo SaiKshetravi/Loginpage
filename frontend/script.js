@@ -50,7 +50,7 @@ if(result.status === "success"){
     localStorage.setItem('accesstoken', result.logindata.accesstoken);
     localStorage.setItem('refreshtoken',result.logindata.refreshtoken);
 
-    alert("login success");
+    // alert("login success");
     window.location.href = "homepage.html";
     
 }

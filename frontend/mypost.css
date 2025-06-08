@@ -1,0 +1,13 @@
+.post-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px;
+  padding: 20px;
+}
+
+.post-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

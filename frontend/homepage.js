@@ -83,3 +83,6 @@ function displayPosts(posts) {
     container.appendChild(card);
   });
 }
+function handlemyposts(event){
+    window.location.href="mypost.html"
+}

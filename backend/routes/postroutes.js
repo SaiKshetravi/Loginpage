@@ -41,4 +41,69 @@ postRoutes.post('/createpost',async(req,res)=>{
         
 
     })
+
+
+    postRoutes.get('/loginuserposts',async(req,res)=>{
+        let authHeader = req.headers.authorization;
+    const accesstoken = authHeader && authHeader.split(" ")[1];
+try{
+    const result= await jwt.verify(accesstoken,process.env.SECURITY_KEY)
+    console.log(result);
+        
+        const userid=result.id;
+        
+        const posts=await postModel.find({userid:userid});
+        
+        res.status(200).json({msg:"posts with userid",status:"success",posts: posts});
+}
+catch(error){
+    res.status(400).json({msg:"session expires",status:"failed"})
+}
+
+
+    });
+
+
+
+
+    postRoutes.delete('/deletepost/:postid',async(req,res)=>{
+        let postid = req.params.postid;
+        try{
+            let postData = await postModel.findById(postid);
+            // console.log("postData :" + postData);
+            let result = await postModel.findByIdAndDelete(postid);
+
+            // if(!result){
+            //      res.status(400).json({msg:"Post Does't Present  !" ,status:"failure",postData:postData,tittle:postData.title})
+            // }
+
+            console.log("result : "+result)
+
+            res.status(200).json({msg:"Post Deleted Successfully !" ,status:"success",title:postData.title})
+
+
+
+        }
+        catch(error){
+            res.status(400).json({msg:"Error in Deleting the post",status:"false"});
+        }
+
+
+
+    })
+
+    postRoutes.get('/postdata/:postid',async(req,res)=>{
+        let postid=req.params.postid;
+        try{
+        let postdata= await postModel.findById(postid);
+        console.log('data :' ,postdata);
+        res.status(200).json({msg:"edit post data",status:"success",postdata:postdata})
+        }
+        catch(error){
+            res.status(400).json({msg:"error in postid",status:"false"});
+        }
+    })
+
 module.exports=postRoutes;
+
+
