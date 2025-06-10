@@ -45,7 +45,7 @@ const login=async(event)=>{
 
 const result = await response.json();
 
-console.log( result);
+console.log( "result:",result);
 if(result.status === "success"){
     localStorage.setItem('accesstoken', result.logindata.accesstoken);
     localStorage.setItem('refreshtoken',result.logindata.refreshtoken);

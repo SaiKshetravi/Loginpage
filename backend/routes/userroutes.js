@@ -222,11 +222,17 @@ router.post('/login',async(req,res)=>{
 // });
 const blacklist=[];
 router.post('/logout',(req,res)=>{
-    const data=req.body;
-    blacklist.push(data.accesstoken);
-    return res.status(400).json({message:'logout',status:'success'});
-    
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Token missing', status: 'fail' });
+    }
+
+    blacklist.push(token);
+    return res.status(200).json({ message: 'Logout successful', status: 'success' });
 });
+    
+
 
 
 

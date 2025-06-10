@@ -15,11 +15,10 @@ const postSchema=new mongoose.Schema({
     Likes:{
         type:[],
         required:false
-    },
-    createdAt: {
-  type: Date,
-  default: Date.now
-}
-})
+    }
+},
+    {
+        timestamps: true
+    });
 const postmodel=new mongoose.model('post',postSchema);
 module.exports=postmodel 

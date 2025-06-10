@@ -11,8 +11,8 @@ const handleLogout = async (event) => {
         headers: {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}` 
-        },
-        body : JSON.stringify(token)
+        }
+        
     });
 
     const result = await response.json();
@@ -69,7 +69,7 @@ const allposts=async(event)=>{
 }
 
 function displayPosts(posts) {
-    console.log(posts);
+    
   const container = document.getElementById("postContainer");
   container.innerHTML = "";
 

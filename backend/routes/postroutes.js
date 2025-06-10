@@ -36,7 +36,7 @@ postRoutes.post('/createpost',async(req,res)=>{
 
     postRoutes.get('/allposts',async(req,res)=>{
 
-        const allposts= await postModel.find().sort({ createdAt: 1 });
+        const allposts= await postModel.find().sort({ createdAt:-1 });
         res.status(200).json({msg:"post fetch successfully",status:"succes",allposts:allposts})
         
 
@@ -138,26 +138,68 @@ postRoutes.put('/likepost/:postid', async (req, res) => {
 
     console.log("User ID from token:", userid);
 
-    const like = await postModel.findByIdAndUpdate(
-      postid,
-      { $addToSet: { Likes: userid } }, // Prevents duplicate likes
-      { new: true }
-    );
+    const like = await postModel.findById(postid);
+     
 
     if (!like) {
       return res.status(404).json({ msg: "Post not found" });
     }
+    const index = like.Likes.indexOf(userid);
+
+    if (index === -1) {
+      // Like the post
+      like.Likes.push(userid);
+    } else {
+      // Unlike the post
+      like.Likes.splice(index, 1);
+    }
+
+    await like.save();
+
+    res.status(200).json({ 
+      msg: index === -1 ? "Liked the post" : "Unliked the post",
+      status: "success",
+      Likes: like.Likes.length
+    });
+
 
     // console.log("Updated Post:", like);
-    res.status(200).json({ msg: "Liked the post", status: "success",Likes:like.Likes.length });
+    // res.status(200).json({ msg: "Liked the post", status: "success",Likes:like.Likes.length });
 
   } catch (error) {
     res.status(400).json({ msg: "Could not like the post", error: error.message });
   }
 });
 
+postRoutes.get('/greaterthanme', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  const accesstoken = authHeader && authHeader.split(" ")[1];
+
+  if (!accesstoken) {
+    return res.status(401).json({ msg: "Access token missing" });
+  }
+
+  try {
+    const decoded = jwt.verify(accesstoken, process.env.SECURITY_KEY);
+    const currentUserId = decoded.id; // or `decoded.userid` depending on your token
+
+    const posts = await postModel.find({
+      userid: { $lt: currentUserId }
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({ msg: "Fetched posts", status: "success", posts: posts });
+  } catch (error) {
+    res.status(400).json({ msg: "Error fetching posts", error: error.message });
+  }
+});
+
+
 
 module.exports=postRoutes;
+
+
+
+
 
 
 

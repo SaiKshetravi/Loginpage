@@ -26,6 +26,7 @@ const handleCreatepost=async(event)=>{
     const result= await response.json();
     if(result.status == 'success'){
         alert("Post created Successfully")
+        window.location.href="homepage.html"
     }else{
         alert("post creation failed! Try again");
     }
