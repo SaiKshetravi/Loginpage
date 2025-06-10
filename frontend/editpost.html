@@ -2,20 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Create Post</title>
+  <title>Edit Post</title>
   <link rel="stylesheet" href="createpost.css">
 </head>
-<body onload="validatetoken(event)">
-  <h2>Create a New Post</h2>
-  <form id="postForm">
+<body onload="validatetoken()">
+  <h2>Edit Post</h2>
+  
     <input  type="text" id="title" placeholder="Enter Title" ><br><br>
     <textarea  id="description" placeholder="Enter Description"></textarea><br><br>
-    <button  type="submit">Submit</button>
-  </form>
+    <button onclick="updatepost(event)" type="submit">Submit</button>
+  
 
 
    
-    <script src="editpost.js"></script>
+    <script src="edittpost.js"></script>
    
 </body>
 </html>

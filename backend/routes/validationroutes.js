@@ -10,7 +10,7 @@ validateRoute.post('/verifytoken',async(req,res)=>{
     // const acesstoken=req.body.accesstoken;
     try{
         const result=jwt.verify(accesstoken,process.env.SECURITY_KEY)
-        console.log(result);
+        // console.log(result);
         res.status(200).json({msg:"verified",status:"success"});
     }
     catch(error){

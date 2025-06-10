@@ -77,7 +77,7 @@ catch(error){
             //      res.status(400).json({msg:"Post Does't Present  !" ,status:"failure",postData:postData,tittle:postData.title})
             // }
 
-            console.log("result : "+result)
+            // console.log("result : "+result)
 
             res.status(200).json({msg:"Post Deleted Successfully !" ,status:"success",title:postData.title})
 
@@ -96,14 +96,73 @@ catch(error){
         let postid=req.params.postid;
         try{
         let postdata= await postModel.findById(postid);
-        console.log('data :' ,postdata);
+        // console.log('data :' ,postdata);
         res.status(200).json({msg:"edit post data",status:"success",postdata:postdata})
         }
         catch(error){
             res.status(400).json({msg:"error in postid",status:"false"});
         }
     })
+    postRoutes.put('/updatepost/:postid',async(req,res)=>{
+
+        let postid=req.params.postid;
+        const data=req.body;
+        try {
+    const updatedPost = await postModel.findByIdAndUpdate(
+      postid,
+      { title:data.title, description:data.description},
+      { new: true }
+      
+    );
+    console.log("updatedpost",updatedPost);
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ message: "Update failed", error });
+  }
+});
+
+
+postRoutes.put('/likepost/:postid', async (req, res) => {
+  const postid = req.params.postid;
+  const authHeader = req.headers.authorization;
+  const accesstoken = authHeader && authHeader.split(" ")[1];
+
+  if (!accesstoken) {
+    return res.status(401).json({ msg: "Access token missing" });
+  }
+
+  try {
+    const result = await jwt.verify(accesstoken, process.env.SECURITY_KEY);
+    // console.log(result )
+    const userid = result.id;
+
+    console.log("User ID from token:", userid);
+
+    const like = await postModel.findByIdAndUpdate(
+      postid,
+      { $addToSet: { Likes: userid } }, // Prevents duplicate likes
+      { new: true }
+    );
+
+    if (!like) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    // console.log("Updated Post:", like);
+    res.status(200).json({ msg: "Liked the post", status: "success",Likes:like.Likes.length });
+
+  } catch (error) {
+    res.status(400).json({ msg: "Could not like the post", error: error.message });
+  }
+});
+
 
 module.exports=postRoutes;
+
+
+
+
+
+
 
 

@@ -109,7 +109,7 @@ router.post('/login',async(req,res)=>{
     if(isUserExits){
        const databasepassword=isUserExits.password;
                const isPasswordValid= await bcrypt.compare(data.loginPassword,databasepassword);
-               console.log("valid password" ,isPasswordValid)
+            //    console.log("valid password" ,isPasswordValid)
                if(isPasswordValid){
                 // const token =isUserExits.accesstoken;
                 try{
